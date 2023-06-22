@@ -6,7 +6,7 @@ inquirer
   .prompt([
     {
       type: "input",
-      message: "Enter URL",
+      message: "Enter URL: ",
       name: "URL",
     },
     {
@@ -22,7 +22,10 @@ inquirer
     var qr_svg = qr.image(answers.URL, { type: "png" });
     qr_svg.pipe(fs.createWriteStream(imgName + ".png"));
 
-    console.log("QRCode created successfully.");
+    fs.appendFile("QRFile.txt", ">" + imgName + ": " + url + "\n", (err) => {
+      if (err) throw err;
+      console.log("The URL has been appended to the file successfully!");
+    });
   })
   .catch((error) => {
     if (error.isTtyError) {
